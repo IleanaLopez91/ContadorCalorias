@@ -25,8 +25,17 @@ function Form() {
     const { name, calories } = activity;
     return name.trim() !== "" && calories > 0;
   };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("submit");
+  };
+
   return (
-    <form className=" space-y-5 bg-white shadow p-10 rounded-lg">
+    <form
+      className=" space-y-5 bg-white shadow p-10 rounded-lg"
+      onSubmit={handleSubmit}
+    >
       <div className=" grid grid-cols-1 gap-3">
         <label htmlFor="category" className=" font-bold">
           Categoria:{" "}
@@ -75,7 +84,7 @@ function Form() {
       <input
         type="submit"
         className=" bg-gray-800 hover:bg-gray-900 w-full p-2 font-bold uppercase text-white cursor-pointer disabled:opacity-10"
-        value="Guradar Comida o Guardar Ejercicio"
+        value={activity.category === 1 ? "Guardar Comida" : "Guardar Ejercicio"}
         disabled={!isValidActivity()}
       />
     </form>
