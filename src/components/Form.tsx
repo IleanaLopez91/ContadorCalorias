@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import type { Activity } from "../types";
 import { categories } from "../data/categories";
+import { ActivityActions } from "../reducers/activity-redeucer";
 
-function Form() {
-  const [activity, setActivity] = useState<Activity>({
+type FormProps = {
+  dispatch: Dispatch<ActivityActions>;
+};
+
+function Form({ dispatch }: FormProps) {
+  const initialState = {
     category: 1,
     name: "",
     calories: 0,
-  });
+  };
+  const [activity, setActivity] = useState<Activity>(initialState);
 
   const handleChange = (
     e:
@@ -28,7 +34,11 @@ function Form() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submit");
+    dispatch({
+      type: "save-activity",
+      payload: { newActivity: activity },
+    });
+    setActivity(initialState);
   };
 
   return (
